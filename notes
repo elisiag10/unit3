@@ -1,0 +1,19 @@
+public class Main
+{ //notes for using return value from another method
+   public static void main (String[] args)
+   {
+     int final_time = 0; //create empty variable to hold the value from the method you want
+     final_time = rental_amount(final_time); //to use value from other method, reassign empty variable by calling the method and inserting itself inside. 
+     System.out.println("final_time " + final_time);	//Now the new var has the value
+    
+   }
+
+
+  public static int rental_amount(int user_input_time) 
+  {
+	Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+  System.out.println("Enter number of minutes of rental: ");	
+ 	user_input_time = myObj.nextInt();  // Read user input
+  return user_input_time; 
+  }
+}
