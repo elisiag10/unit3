@@ -1,0 +1,64 @@
+
+
+// public class does not have main methods
+//The body contains the data and methods for the class. 
+//The data components of a class are often referred to as data fields to help distinguish them from other variables you might use. 
+//Data fields are variables you declare within a class but outside of any method.
+
+public class Rental {
+
+  //Two public final static fields that hold the number of minutes in an hour and the hourly rental rate 
+    final static int MINUTES_IN_AN_HOUR = 60;
+    final static int RENT_PER_HOUR = 40;
+
+   
+    private String contractNumber;  //Assigning private access to a field means that no other classes can access the field’s values, 
+    private  int hoursRented;       //and only methods of the same class are allowed to set, get,
+    private  int additionalMinutes;
+    private  int total;
+    
+    }
+    //Two public set methods
+     public void setContractNumber (String x)
+     {
+
+      String contractNumber = x; 
+    }
+
+     public void setHoursAndMinutes(int x)
+      {
+
+          int hoursRented = x/MINUTES_IN_AN_HOUR;
+          int additionalMinutes = x % MINUTES_IN_AN_HOUR; 
+          int total = hoursRented * RENT_PER_HOUR + additionalMinutes; 
+      }
+
+
+    //Four public get methods that return the values in the four nonstatic fields.
+     public  int getcontractNumber()
+      {
+
+          return contractNumber; 
+       
+      }
+
+     public  int gethoursRented()
+      {
+
+        return hoursRented; 
+      }
+
+
+     public  int getAdditionalMinutes()  //Do not add static
+      {
+
+        return additionalMinutes;
+      }
+
+     public  int getTotal()
+     {
+       return total;
+      }
+
+
+}
