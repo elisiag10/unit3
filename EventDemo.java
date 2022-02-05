@@ -9,9 +9,6 @@ public class EventDemo {
         Main.displayBanner();
         displayPrice(event.getEventNumber(), event.getNumberOfGuest(), event.getPrice(), event.PRICE_PER_GUEST,
                 event.CUT_OFF_VALUE);
-        Event event1 = new Event();
-        Event event2 = new Event("A001", 5);
-
     }
 
     public static String inputEventNumber() {
