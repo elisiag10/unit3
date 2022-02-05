@@ -9,6 +9,8 @@ public class EventDemo {
         Main.displayBanner();
         displayPrice(event.getEventNumber(), event.getNumberOfGuest(), event.getPrice(), event.PRICE_PER_GUEST,
                 event.CUT_OFF_VALUE);
+        Event event1 = new Event();
+        Event event2 = new Event("A001", 5);
 
     }
 
@@ -30,10 +32,10 @@ public class EventDemo {
 
     public static void displayPrice(String eventNumber, int getNumberOfGuest, int getPrice, int pricePerGuest,
             int cutOffVal) {
-        System.out.println("This fucker here should be the event number " + eventNumber);
+        System.out.println("Event number " + eventNumber);
         System.out.println("Number of guests: " + getNumberOfGuest);
-        System.out.println("The price per guests: " + getPrice);
-        System.out.println("Final price: " + getNumberOfGuest * getPrice);
+        System.out.println("The price per guests: " + pricePerGuest);
+        System.out.println("Final price: " + getPrice);
         System.out.println("Large event: " + (getNumberOfGuest > cutOffVal));
 
     }
