@@ -1,0 +1,124 @@
+public class Rental {
+    // Two public final static fields that hold the number of minutes in an hour and
+    // the hourly rental rate
+    final static int MINUTES_IN_AN_HOUR = 60;
+    final int RENT_PER_HOUR = 40;
+    final int ADDITIONAL_HOUR = 1;
+
+    private String contractNumber;
+    private int hoursRented;
+    private int additionalMinutes;
+    private int total;
+
+    // Two public set methods
+    public void setContractNumber(String x) {
+        contractNumber = x;
+    }
+
+    public void setHoursAndMinutes(int x) {
+
+        if (x >= RENT_PER_HOUR) {
+            int user_input_time = x / MINUTES_IN_AN_HOUR;
+            additionalMinutes = x % MINUTES_IN_AN_HOUR;
+            total = (user_input_time * RENT_PER_HOUR + additionalMinutes) * ADDITIONAL_HOUR;
+        } else {
+            int user_input_time = x / MINUTES_IN_AN_HOUR;
+            additionalMinutes = x % MINUTES_IN_AN_HOUR;
+            total = user_input_time * RENT_PER_HOUR + additionalMinutes;
+        }
+
+    }
+
+    // Four public get methods that return the values in the four nonstatic fields.
+    public String getcontractNumber() {
+        return contractNumber;
+    }
+
+    public int gethoursRented() {
+        return hoursRented;
+    }
+
+    public int getAdditionalMinutes() {
+        return additionalMinutes;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public Rental(String eventNumber, int numberOfGuests) {
+        setContractNumber(eventNumber);
+        setHoursAndMinutes(numberOfGuests);
+    }
+
+    public Rental() {
+        this("A000", 0);
+    }
+
+    public void displayDetails(String v, int w, int x, int y, int z) {
+
+        System.out.println("Contract Number: " + v);
+        System.out.println("Contract guest total: " + w);
+        System.out.println("Hourly Rate: " + RENT_PER_HOUR);
+        System.out.println("Additional minutes: " + additionalMinutes);
+        System.out.println("Total: " + total);
+    }
+}
+
+----------------------------------------------------------------------------------
+import java.util.Scanner;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class RentalDemo {
+    public static void main(String[] args) {
+
+        Rental rent = new Rental();
+        // rent.setContractNumber(contract_number());
+        // rent.setHoursAndMinutes(rental_amount());
+        Main.displayBanner();
+        // rent.displayDetails(rent.getcontractNumber(), rent.RENT_PER_HOUR,
+        // rent.getAdditionalMinutes(), rent.getTotal());
+
+        // Instantiate three Rental objects, and prompt the user for values for each
+        // object.
+        Rental rental = new Rental();
+        Rental eventOb1 = new Rental();
+        Rental eventOb2 = new Rental();
+        Rental eventOb3 = new Rental();
+
+        String numberEvent1 = contract_number();
+        int guestsTotal1 = rental_amount();
+
+        String numberEvent2 = contract_number();
+        int guestsTotal2 = rental_amount();
+
+        String numberEvent3 = contract_number();
+        int guestsTotal3 = rental_amount();
+
+        eventOb1.displayDetails(numberEvent1, guestsTotal1, rental.RENT_PER_HOUR, rent.ADDITIONAL_HOUR,
+                rent.getTotal());
+
+        eventOb2.displayDetails(numberEvent2, guestsTotal2, rental.RENT_PER_HOUR, rent.ADDITIONAL_HOUR,
+                rent.getTotal());
+
+        eventOb3.displayDetails(numberEvent3, guestsTotal3, rental.RENT_PER_HOUR, rent.ADDITIONAL_HOUR,
+                rent.getTotal());
+        // rent.getAdditionalMinutes(), rent.getTotal());
+
+    }
+
+    public static String contract_number() {
+        Scanner myObj = new Scanner(System.in);
+        System.out.println("Hello enter contract number > ");
+        String user_contract_number = myObj.nextLine();
+        return user_contract_number;
+    }
+
+    public static int rental_amount() {
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+        System.out.println("Enter number of minutes of rental: ");
+        int user_input_time = myObj.nextInt(); // Read user input
+        return user_input_time;
+    }
+
+}
