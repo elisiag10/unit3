@@ -1,7 +1,6 @@
-
 public class Event {
 
-    private int pricePerGuests = 0;
+    public int pricePerGuests;
 
     // Two fields that holds the high and low price per guest
 
@@ -34,38 +33,36 @@ public class Event {
         eventNumber = x;
     }
 
-    public void setGuests(int numberOfGuests) {
-        if (numberOfGuests < 50) {
+    public void setGuests(int x) {
+        if (x < 50) {
             pricePerGuests = lowPricePerGuest;
-            System.out.println("LowPrice: " + lowPricePerGuest);
         } else {
             pricePerGuests = highPricePerGuest;
-            System.out.println("HighPrice: " + highPricePerGuest);
         }
-        // return pricePerGuests;
     }
 
-    public int priceTotal(int pricePerGuests, int numberOfGuests) {
+    public int priceTotal(int numberOfGuests) {
         priceTotal = pricePerGuests * numberOfGuests;
-        System.out.println(priceTotal);
         return priceTotal;
     }
 
     // Add a new method named isLargeEvent()
-    public boolean isLargeEvent(int numberOfGuests) {
-        if (numberOfGuests >= CUT_OFF_VALUE) {
+    public boolean isLargeEvent(int x) {
+        if (x >= CUT_OFF_VALUE) {
+            return true;
+        } else {
+            return false;
         }
-        return true;
     }
 
     // Display event details
-    public void displayDetails(int numberOfGuests, String eventNumber) {
-
-        System.out.println("Event number " + eventNumber);
-        System.out.println("Number of guests: " + numberOfGuests);
+    public void displayDetails(int x, String y) {
+        System.out.println("\n");
+        System.out.println("Event number " + y);
+        System.out.println("Number of guests: " + x);
         System.out.println("The price per guests: " + pricePerGuests);
         System.out.println("Final price: " + priceTotal);
-        System.out.println(isLargeEvent(numberOfGuests));
+        System.out.println(isLargeEvent(x));
     }
 
 }
@@ -81,7 +78,7 @@ public class EventDemo {
 
         // prompt user for values
         String numberEvent1 = getUserEventNumber();
-        int guestsTotaEl1 = getUserGuestAmount();
+        int guestsTotal1 = getUserGuestAmount();
 
         String numberEvent2 = getUserEventNumber();
         int guestsTotal2 = getUserGuestAmount();
@@ -90,12 +87,18 @@ public class EventDemo {
         int guestsTotal3 = getUserGuestAmount();
 
         Event event1 = new Event();
-        event1.displayDetails(guestsTotaEl1, numberEvent1);
+        event1.setGuests(guestsTotal1);
+        event1.priceTotal(guestsTotal1);
+        event1.displayDetails(guestsTotal1, numberEvent1);
 
         Event event2 = new Event();
+        event2.setGuests(guestsTotal2);
+        event2.priceTotal(guestsTotal2);
         event2.displayDetails(guestsTotal2, numberEvent2);
 
         Event event3 = new Event();
+        event3.setGuests(guestsTotal3);
+        event3.priceTotal(guestsTotal3);
         event3.displayDetails(guestsTotal3, numberEvent3);
     }
 
