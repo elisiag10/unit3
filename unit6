@@ -1,0 +1,139 @@
+public class Event {
+
+    public int pricePerGuests;
+
+    // Two fields that holds the high and low price per guest
+
+    public final static int lowPricePerGuest = 32;
+    public final static int highPricePerGuest = 35;
+
+    // Public final static fields
+    public final static int CUT_OFF_VALUE = 50;
+
+    // three private fields
+    private static String eventNumber;
+    private static int numberOfGuests;
+    public static int priceTotal = 0;
+
+    // three public get methods
+    public String getEventNumber() {
+        return eventNumber;
+    }
+
+    public int getNumberOfGuest() {
+        return numberOfGuests;
+    }
+
+    public void setEventNumber(String x) {
+        eventNumber = x;
+    }
+
+    public void setGuests(int x) {
+        if (x < 50) {
+            pricePerGuests = lowPricePerGuest;
+        } else {
+            pricePerGuests = highPricePerGuest;
+        }
+    }
+
+    public int priceTotal(int numberOfGuests) {
+        priceTotal = pricePerGuests * numberOfGuests;
+        return priceTotal;
+    }
+
+    // Add a new method named isLargeEvent()
+    public boolean isLargeEvent(int x) {
+        if (x >= CUT_OFF_VALUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Display event details
+    public void displayDetails(int x, String y) {
+        System.out.println("\n");
+        System.out.println("Event number " + y);
+        System.out.println("Number of guests: " + x);
+        System.out.println("The price per guests: " + pricePerGuests);
+        System.out.println("Final price: " + priceTotal);
+        System.out.println(isLargeEvent(x));
+    }
+
+}
+----------------------------------------------------------------------------
+
+import java.util.Scanner;
+
+public class EventDemo {
+
+    public static void main(String[] args) {
+
+        // prompt user for values
+
+        String numberEvent1 = getUserEventNumber();
+        int guestsTotal1 = displayGreeting(determineSize(getUserGuestAmount()));
+
+        String numberEvent2 = getUserEventNumber();
+        int guestsTotal2 = determineSize(getUserGuestAmount());
+
+        String numberEvent3 = getUserEventNumber();
+        int guestsTotal3 = determineSize(getUserGuestAmount());
+
+        Event event1 = new Event();
+        event1.setGuests(guestsTotal1);
+        event1.priceTotal(guestsTotal1);
+        event1.displayDetails(guestsTotal1, numberEvent1);
+
+        Event event2 = new Event();
+        event2.setGuests(guestsTotal2);
+        event2.priceTotal(guestsTotal2);
+        event2.displayDetails(guestsTotal2, numberEvent2);
+
+        Event event3 = new Event();
+        event3.setGuests(guestsTotal3);
+        event3.priceTotal(guestsTotal3);
+        event3.displayDetails(guestsTotal3, numberEvent3);
+    }
+
+    public static String getUserEventNumber() {
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+        System.out.println("Enter event number: ");
+        String eventNumberInput = myObj.nextLine(); // Read user input
+        return eventNumberInput;
+    }
+
+    public static int getUserGuestAmount() {
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+        System.out.println("Enter number of guests: ");
+        int numberOfGuestsInput = myObj.nextInt(); // Read user input
+        return numberOfGuestsInput;
+
+    }
+
+    public static int determineSize(int x) {
+        int correctSize = 0;
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+
+        while (true) {
+            if (x < 5 || x > 50) {
+                while (correctSize < 5 || correctSize > 50) {
+                    System.out.println("You must enter a guest number higher than 5 but less than 50: ");
+                    correctSize = myObj.nextInt(); // Read user input
+                }
+            } else {
+                correctSize = x;
+            }
+            return correctSize;
+        }
+    }
+
+    public static int displayGreeting(int userX) {
+        int x = 1;
+        for (x = 1; x < userX; x++) {
+            System.out.println("Please come to my event!");
+        }
+        System.out.println("\n");
+        return x;
+    }
+}
