@@ -1,0 +1,192 @@
+import java.util.Scanner;
+
+public class RentalDemo {
+    public static void main(String[] args) {
+
+        Main.displayBanner();
+        Rental eventOb1 = new Rental();
+        Rental eventOb2 = new Rental();
+        Rental eventOb3 = new Rental();
+
+        String numberEvent1 = contract_number();
+        int guestsTotal1 = displayGreeting(determineSize(rental_amount()));
+        String phoneNumber1 = grabPhoneNumber();
+
+        eventOb1.setHoursAndMinutes(guestsTotal1);
+        eventOb1.displayDetails(numberEvent1, guestsTotal1);
+        eventOb1.getPhoneNumber(phoneNumber1);
+
+        String numberEvent2 = contract_number();
+        int guestsTotal2 = determineSize(rental_amount());
+        String phoneNumber2 = grabPhoneNumber();
+
+        eventOb2.setHoursAndMinutes(guestsTotal2);
+        eventOb2.displayDetails(numberEvent2, guestsTotal2);
+        eventOb2.getPhoneNumber(phoneNumber2);
+
+        String numberEvent3 = contract_number();
+        int guestsTotal3 = determineSize(rental_amount());
+        String phoneNumber3 = grabPhoneNumber();
+
+        eventOb3.setHoursAndMinutes(guestsTotal3);
+        eventOb3.displayDetails(numberEvent3, guestsTotal3);
+        eventOb3.getPhoneNumber(phoneNumber3);
+    }
+
+    public static String contract_number() {
+        Scanner myObj = new Scanner(System.in);
+        System.out.println("Hello, enter contract number > ");
+        String x = myObj.nextLine();
+
+        if (x.length() > 4) {
+            x = "A000";
+        } else if (x.length() == 4) {
+            if (Character.isAlphabetic(x.charAt(0)) || Character.isDigit(x.charAt(1))
+                    || Character.isDigit(x.charAt(2)) || Character.isDigit(x.charAt(3))) {
+            } else {
+                System.out.println("Working format");
+            }
+        }
+        return x;
+
+    }
+
+    public static int rental_amount() {
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+        System.out.println("Enter number of minutes of rental: ");
+        int user_input_time = myObj.nextInt(); // Read user input
+        return user_input_time;
+    }
+
+    public static int determineSize(int x) {
+        int correctSize = 0;
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+
+        while (true) {
+            if (x < 60 || x > 7200) {
+                while (correctSize < 60 || correctSize > 7200) {
+                    System.out.println("You must enter a guest number higher than 60 but less than 7200: ");
+                    correctSize = myObj.nextInt(); // Read user input
+                }
+            } else {
+                correctSize = x;
+            }
+            return correctSize;
+        }
+    }
+
+    public static int displayGreeting(int userX) {
+        int x = 1;
+        for (x = 1; x < userX / 60; x++) {
+            System.out.println("Coupon good for 10 percent off next rental");
+        }
+        System.out.println("\n");
+        return x;
+    }
+
+    public static String grabPhoneNumber() {
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+        System.out.println("Enter phone number: ");
+        String x = myObj.nextLine(); // Read user input
+        return x;
+    }
+
+}
+---------------------------------------------------------------
+public class Rental {
+    // Two public final static fields that hold the number of minutes in an hour and
+    // the hourly rental rate
+    final static int MINUTES_IN_AN_HOUR = 60;
+    final int RENT_PER_HOUR = 40;
+    final int ADDITIONAL_HOUR = 1;
+
+    private String contractNumber;
+    private int hoursRented;
+    private int additionalMinutes;
+    private int total;
+
+    // Add a contact phone number field
+    public static String phoneNumber = "";
+    public static String phoneNumberFinal = "";
+    public static String formattedPhoneNumber = "";
+
+    // Two public set methods
+    public void setContractNumber(String x) {
+        contractNumber = x;
+    }
+
+    public void setHoursAndMinutes(int x) {
+        int user_input_time;
+        if (x >= RENT_PER_HOUR) {
+            user_input_time = x / MINUTES_IN_AN_HOUR;
+            additionalMinutes = x % MINUTES_IN_AN_HOUR;
+            total = (user_input_time * RENT_PER_HOUR + additionalMinutes) * ADDITIONAL_HOUR;
+        } else {
+            user_input_time = x / MINUTES_IN_AN_HOUR;
+            additionalMinutes = x % MINUTES_IN_AN_HOUR;
+            total = user_input_time * RENT_PER_HOUR + additionalMinutes;
+        }
+
+    }
+
+    // Four public get methods that return the values in the four nonstatic fields.
+    public String getcontractNumber() {
+        return contractNumber;
+    }
+
+    public int gethoursRented() {
+        return hoursRented;
+    }
+
+    public int getAdditionalMinutes() {
+        return additionalMinutes;
+    }
+
+    public Rental(String eventNumber, int numberOfGuests) {
+        setContractNumber(eventNumber);
+        setHoursAndMinutes(numberOfGuests);
+    }
+
+    public String getPhoneNumber(String x) {
+        phoneNumber = x;
+        setPhoneNumber(phoneNumber);
+        return phoneNumber;
+    }
+
+    public static String setPhoneNumber(String x) {
+        if (x.length() >= 10) {
+            x.replaceAll("[^a-zA-Z ]", "");
+            phoneNumberFinal = x;
+        } else {
+            x = "000000000";
+            phoneNumberFinal = x;
+        }
+        getPhone(phoneNumberFinal);
+        return phoneNumberFinal;
+    }
+
+    // Format Phone number
+    public static String getPhone(String x) {
+
+        if (x.length() >= 10) {
+            formattedPhoneNumber = x.replaceAll("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+
+        }
+        return formattedPhoneNumber;
+    }
+
+    public Rental() {
+        this("A000", 0);
+    }
+
+    public void displayDetails(String v, int w) {
+
+        System.out.println("Contract Number: " + v);
+        System.out.println("Contract guest total: " + w);
+        System.out.println("Hourly Rate: " + RENT_PER_HOUR);
+        System.out.println("Additional minutes: " + additionalMinutes);
+        System.out.println("Total: " + total);
+        System.out.println("Phone Number: " + formattedPhoneNumber);
+        System.out.println("\n");
+    }
+}
