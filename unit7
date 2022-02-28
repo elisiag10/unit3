@@ -1,0 +1,201 @@
+
+public class Event {
+
+    public int pricePerGuests;
+
+    // Two fields that holds the high and low price per guest
+
+    public final static int lowPricePerGuest = 32;
+    public final static int highPricePerGuest = 35;
+
+    // Public final static fields
+    public final static int CUT_OFF_VALUE = 50;
+
+    // three private fields
+    private static String eventNumber;
+    private static int numberOfGuests;
+    public static int priceTotal = 0;
+
+    // Add a contact phone number field
+    public static String phoneNumber = "";
+    public static String phoneNumberFinal = "";
+    public static String formattedPhoneNumber = "";
+
+    // three public get methods
+    public String getEventNumber() {
+        return eventNumber;
+    }
+
+    public int getNumberOfGuest() {
+        return numberOfGuests;
+    }
+
+    public void setEventNumber(String x) {
+        eventNumber = x;
+    }
+
+    public void setGuests(int x) {
+        if (x < 50) {
+            pricePerGuests = lowPricePerGuest;
+        } else {
+            pricePerGuests = highPricePerGuest;
+        }
+    }
+
+    public int priceTotal(int numberOfGuests) {
+        priceTotal = pricePerGuests * numberOfGuests;
+        return priceTotal;
+    }
+
+    // Add a set method for the contact phone number field
+
+    public String getPhoneNumber(String x) {
+        phoneNumber = x;
+        setPhoneNumber(phoneNumber);
+        return phoneNumber;
+    }
+
+    public static String setPhoneNumber(String x) {
+        if (x.length() >= 10) {
+            x.replaceAll("[^a-zA-Z ]", "");
+            phoneNumberFinal = x;
+        } else {
+            x = "000000000";
+            phoneNumberFinal = x;
+        }
+        getPhone(phoneNumberFinal);
+        return phoneNumberFinal;
+    }
+
+    // Format Phone number
+    public static String getPhone(String x) {
+
+        if (x.length() >= 10) {
+            formattedPhoneNumber = x.replaceAll("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+
+        }
+        return formattedPhoneNumber;
+    }
+
+    // Add a new method named isLargeEvent()
+    public boolean isLargeEvent(int x) {
+        if (x >= CUT_OFF_VALUE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Display event details
+    public void displayDetails(int x, String y) {
+        System.out.println("\n");
+        System.out.println("Event number " + y);
+        System.out.println("Number of guests: " + x);
+        System.out.println("The price per guests: " + pricePerGuests);
+        System.out.println("Final price: " + priceTotal);
+        System.out.println("Is large event: " + isLargeEvent(x));
+        System.out.println("Phone Number: " + formattedPhoneNumber);
+
+    }
+
+}
+------------------------------------------------------------------------
+
+import java.util.Scanner;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
+
+public class EventDemo {
+
+    public static void main(String[] args) {
+
+        // prompt user for values
+        String numberEvent1 = getUserEventNumber();
+        int guestsTotal1 = displayGreeting(determineSize(getUserGuestAmount()));
+        String phoneNumber1 = grabPhoneNumber();
+
+        String numberEvent2 = getUserEventNumber();
+        int guestsTotal2 = determineSize(getUserGuestAmount());
+        String phoneNumber2 = grabPhoneNumber();
+
+        String numberEvent3 = getUserEventNumber();
+        int guestsTotal3 = determineSize(getUserGuestAmount());
+        String phoneNumber3 = grabPhoneNumber();
+
+        Event event1 = new Event();
+        event1.setGuests(guestsTotal1);
+        event1.priceTotal(guestsTotal1);
+        event1.displayDetails(guestsTotal1, numberEvent1);
+        event1.getPhoneNumber(phoneNumber1);
+
+        Event event2 = new Event();
+        event2.setGuests(guestsTotal2);
+        event2.priceTotal(guestsTotal2);
+        event2.displayDetails(guestsTotal2, numberEvent2);
+        event2.getPhoneNumber(phoneNumber2);
+
+        Event event3 = new Event();
+        event3.setGuests(guestsTotal3);
+        event3.priceTotal(guestsTotal3);
+        event3.displayDetails(guestsTotal3, numberEvent3);
+        event3.getPhoneNumber(phoneNumber3);
+    }
+
+    public static String getUserEventNumber() {
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+        System.out.println("Enter event number: ");
+        String x = myObj.nextLine(); // Read user input
+
+        if (x.length() > 4) {
+            x = "A000";
+        } else if (x.length() == 4) {
+            if (!Character.isAlphabetic(x.charAt(0)) || !Character.isDigit(x.charAt(1))
+                    || !Character.isDigit(x.charAt(2)) || !Character.isDigit(x.charAt(3))) {
+            } else {
+                System.out.println("Working format");
+            }
+        }
+        return x;
+    }
+
+    public static int getUserGuestAmount() {
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+        System.out.println("Enter number of guests: ");
+        int numberOfGuestsInput = myObj.nextInt(); // Read user input
+        return numberOfGuestsInput;
+
+    }
+
+    public static int determineSize(int x) {
+        int correctSize = 0;
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+
+        while (true) {
+            if (x < 5 || x > 50) {
+                while (correctSize < 5 || correctSize > 50) {
+                    System.out.println("You must enter a guest number higher than 5 but less than 50: ");
+                    correctSize = myObj.nextInt(); // Read user input
+                }
+            } else {
+                correctSize = x;
+            }
+            return correctSize;
+        }
+    }
+
+    public static int displayGreeting(int userX) {
+        int x = 1;
+        for (x = 1; x < userX; x++) {
+            System.out.println("Please come to my event!");
+        }
+        System.out.println("\n");
+        return x;
+    }
+
+    public static String grabPhoneNumber() {
+        Scanner myObj = new Scanner(System.in); // Create a Scanner object
+        System.out.println("Enter phone number: ");
+        String x = myObj.nextLine(); // Read user input
+        return x;
+    }
+}
